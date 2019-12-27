@@ -1,3 +1,5 @@
+import * as R from 'ramda';
+
 export var cloneObj = function(obj){
 
   if(typeof obj !== 'object' || !obj){
@@ -17,3 +19,17 @@ export var cloneObj = function(obj){
   }
   return newobj;
   }
+
+  function keepDecimal(num,pos = 4){
+    const position = pos >0 ? Math.pow(10,pos) : 0;
+    return position ?Math.round(num * position) / position :Math.round(num);
+  }
+  
+  function percentFunc(num){
+    return Math.round(num* 100 * 100)/100 +'%';
+  }
+
+  export const decimal = R.curry(keepDecimal);
+  export const percent = R.curry(percentFunc);
+
+  export const decimalAndPercent = R.compose(percent,decimal)
